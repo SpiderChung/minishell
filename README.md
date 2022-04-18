@@ -52,5 +52,12 @@ https://harm-smits.github.io/42docs/projects/minishell
 * ttyname
 * ttyslot
 * ioctl,
-getenv, tcsetattr, tcgetattr, tgetent, tgetflag,
-tgetnum, tgetstr, tgoto, tputs
+* getenv
+* tcsetattr
+* tcgetattr
+* tgetent
+* tgetflag
+* tgetnum
+* tgetstr
+* tgoto
+* tputs
