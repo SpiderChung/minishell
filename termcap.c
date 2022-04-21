@@ -1,39 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   termcap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/03 19:37:41 by schung            #+#    #+#             */
-/*   Updated: 2022/04/21 20:56:03 by schung           ###   ########.fr       */
+/*   Created: 2022/04/21 20:51:03 by schung            #+#    #+#             */
+/*   Updated: 2022/04/21 21:07:47 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers/minishell.h"
 
-void	show_prompt(void)
+void	init_terminal(char *termtype)
 {
-	write(1, LMAGENTA, ft_strlen(LMAGENTA));
-	write(1, "minishell$ ", strlen("minishell$ "));
-	write(1, DEFAULT, ft_strlen(DEFAULT));
-}
+	int	success;
 
-int	main(int argc, char **argv, char **env)
-{
-	(void)env;
-	int		success;
-	
-	if (argc > 1 && argv)
-	{
-		ft_putstr_fd(ERR, STDERR);
-		return (1);
-	}
-	show_prompt();
-	success = tgetent(0, getenv("TERM"));
-	if (!success)
-		return (1);
-	
-	printf("%s", term);
-	return (0);
+	success = tgetent(0, termtype);
+	if (success < 0)
+		error_message("Could not access the termcap data base");
+	else if (success == 0)
+		error_message("Terminal type is not defined in termcap library");
+	success = 
 }

@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 18:44:38 by schung            #+#    #+#             */
-/*   Updated: 2022/04/18 19:59:05 by schung           ###   ########.fr       */
+/*   Updated: 2022/04/21 21:04:54 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # include <stdio.h>
 # include <readline/readline.h>
 # include <readline/history.h>
+# include <term.h>
+# include <termcap.h>
 
 # define LMAGENTA "\033[1;35m"
 # define DEFAULT "\033[0m"
@@ -45,5 +47,11 @@
 
 /*________minishell.c__________*/
 int	main(int argc, char **argv, char **env);
+
+/*________termcap.c__________*/
+void init_terminal(char *termtype);
+
+/*________errors.c__________*/
+int error_message(char *str);
 
 #endif

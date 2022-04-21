@@ -1,39 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   minishell.c                                        :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/03 19:37:41 by schung            #+#    #+#             */
-/*   Updated: 2022/04/21 20:56:03 by schung           ###   ########.fr       */
+/*   Created: 2022/04/21 21:02:09 by schung            #+#    #+#             */
+/*   Updated: 2022/04/21 21:03:24 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers/minishell.h"
 
-void	show_prompt(void)
+int error_message(char *str)
 {
-	write(1, LMAGENTA, ft_strlen(LMAGENTA));
-	write(1, "minishell$ ", strlen("minishell$ "));
-	write(1, DEFAULT, ft_strlen(DEFAULT));
-}
-
-int	main(int argc, char **argv, char **env)
-{
-	(void)env;
-	int		success;
-	
-	if (argc > 1 && argv)
-	{
-		ft_putstr_fd(ERR, STDERR);
-		return (1);
-	}
-	show_prompt();
-	success = tgetent(0, getenv("TERM"));
-	if (!success)
-		return (1);
-	
-	printf("%s", term);
-	return (0);
+	ft_putstr_fd(str, STDERR);
+	return (1);
 }

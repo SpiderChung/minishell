@@ -6,7 +6,7 @@
 #    By: schung <schung@student.21-school.ru>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/18 18:44:32 by schung            #+#    #+#              #
-#    Updated: 2022/04/18 19:59:14 by schung           ###   ########.fr        #
+#    Updated: 2022/04/21 20:18:26 by schung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make -C libft
-	@$(CC) -I $(HEADER) $(OBJ) -Llibft -lft -o $(NAME)
+	@$(CC) -I $(HEADER) $(OBJ) -Llibft -lft -ltermcap -o $(NAME)
 	@echo "$(LMAGENTA)[INFO] [$(NAME)] created"
 
 clean:
