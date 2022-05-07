@@ -1,7 +1,5 @@
 # minishell
 https://harm-smits.github.io/42docs/projects/minishell
-
-https://www.notion.so/coding_wiki-1d8b8bc675f5426db90a02dd22324ac8
 ***
 * [Abstract syntax theory](https://ruslanspivak.com/lsbasi-part7)
 * [Solid start](https://www.cs.purdue.edu/homes/grr/SystemsProgrammingBook/Book/Chapter5-WritingYourOwnShell.pdf)
