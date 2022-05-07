@@ -6,27 +6,41 @@
 #    By: schung <schung@student.21-school.ru>       +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/18 18:44:32 by schung            #+#    #+#              #
-#    Updated: 2022/04/21 20:18:26 by schung           ###   ########.fr        #
+#    Updated: 2022/05/07 23:47:17 by schung           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME = minishell
+NAME 			:= 	minishell
 
-HEADER = headers/minishell.h
+HEADER 			:= 	headers/minishell.h
 
-SRC = minishell.c \
+SRCS_EXEC 		:= 	executor.c
+SRCS_EXPAND		:=	expander.c
+SRCS_LEXER 		:= 	lexer.c
+SRCS_PARSER		:=	parser.C
+SRCS_SIGNALS 	:= 	signals.c
+SRCS_UTILS	 	:= 	utils.c
+SRCS_ENV	 	:= 	env.c
 
-OBJ = ${SRC:.c=.o}
+SRCS			:= 	minishell.c
+SRCS 			+= 	$(addprefix executor/, $(SRCS_EXEC)) \
+			   		$(addprefix expander/, $(SRCS_EXPAND)) \
+			   		$(addprefix lexer/, $(SRCS_LEXER)) \
+					$(addprefix utils/, $(SRCS_UTILS)) \
+					$(addprefix signals/, $(SRCS_SIGNALS)) \
+					$(addprefix envi/, $(SRCS_ENV)) 
 
-CFLAGS = -Wall -Werror -Wextra
+OBJ 			:= ${SRCS:.c=.o}
 
-CC = gcc $(CFLAGS)
+CFLAGS 			:= -Wall -Werror -Wextra
 
-LIB = ar rc $(NAME)
+CC 				:= gcc $(CFLAGS)
 
-RANLIB = ranlib $(NAME)
+LIB 			:= ar rc $(NAME)
 
-REMOVE = rm -f
+RANLIB 			:= ranlib $(NAME)
+
+REMOVE 			:= rm -f
 
 %.o: %.c $(HEADER)
 	$(CC) -I $(HEADER) -c $< -o $@
@@ -35,7 +49,7 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	@make -C libft
-	@$(CC) -I $(HEADER) $(OBJ) -Llibft -lft -ltermcap -o $(NAME)
+	@$(CC) -I $(HEADER) -Llibft -lft -lreadline -o $(NAME) $(OBJ)
 	@echo "$(LMAGENTA)[INFO] [$(NAME)] created"
 
 clean:

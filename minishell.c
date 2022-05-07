@@ -6,34 +6,61 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 19:37:41 by schung            #+#    #+#             */
-/*   Updated: 2022/04/21 20:56:03 by schung           ###   ########.fr       */
+/*   Updated: 2022/05/07 23:51:43 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "headers/minishell.h"
 
-void	show_prompt(void)
+char	**g_env = NULL;
+
+static char	*get_input(void)
 {
-	write(1, LMAGENTA, ft_strlen(LMAGENTA));
-	write(1, "minishell$ ", strlen("minishell$ "));
-	write(1, DEFAULT, ft_strlen(DEFAULT));
+	char	*input;
+	char	*prompt;
+
+	prompt = env_get_value("PS1");
+	if (prompt == NULL)
+		prompt = PROMPT;
+	if (isatty(STDIN_FILENO))
+		input = readline(prompt);
+	else
+		input = get_next_line(STDIN_FILENO);
+	if (input == NULL)
+		return (NULL);
+	else if (isatty(STDIN_FILENO) && input && input[0])
+		add_history(input);
+	return (input);
 }
 
-int	main(int argc, char **argv, char **env)
+static void	process_input(char *input)
 {
-	(void)env;
-	int		success;
-	
-	if (argc > 1 && argv)
+	ft_putendl_fd(input, STDOUT_FILENO);
+}
+
+int	main(void)
+{
+	char		*input;
+
+	signal(SIGQUIT, SIG_IGN);
+	if (env_init() == ERROR)
+		return (EXIT_FAILURE);
+	while (42)
 	{
-		ft_putstr_fd(ERR, STDERR);
-		return (1);
+		signal(SIGINT, signal_tckl);
+		termios_change(FALSE);
+		input = get_input();
+		if (input == NULL)
+		{
+			if (isatty(STDERR_FILENO))
+				ft_putendl_fd("exit", STDERR_FILENO);
+			termios_change(TRUE);
+			break ;
+		}
+		process_input(input);
 	}
-	show_prompt();
-	success = tgetent(0, getenv("TERM"));
-	if (!success)
-		return (1);
-	
-	printf("%s", term);
-	return (0);
+	rl_clear_history();
+	if (g_env)
+		ft_free(&g_env);
+	exit (0);
 }
