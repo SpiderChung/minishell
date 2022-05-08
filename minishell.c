@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 19:37:41 by schung            #+#    #+#             */
-/*   Updated: 2022/05/07 23:51:43 by schung           ###   ########.fr       */
+/*   Updated: 2022/05/08 16:50:18 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static char	*get_input(void)
 
 static void	process_input(char *input)
 {
-	ft_putendl_fd(input, STDOUT_FILENO);
+	ft_putstr_fd(input, STDOUT_FILENO);
 }
 
 int	main(void)
