@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 18:44:38 by schung            #+#    #+#             */
-/*   Updated: 2022/05/08 21:45:55 by schung           ###   ########.fr       */
+/*   Updated: 2022/05/29 15:48:42 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,23 @@
 # define STDIN 				0
 # define STDOUT 			1
 # define STDERR 			2
-# define ARGERR 			"minishell: too many arguments\n"
-# define INIT_ERR 			"Initialization error\n"
+# define ARGERR 			"minishell: too many arguments"
+# define INIT_ERR 			"Initialization error"
+# define ERR_SYNTAX			"syntax error"
+# define ERR_SYNTAX_EXIT	2
+# define ERR_QUOTE			"unclosed quotation mark"
 
 # define WHITESPACES		" \t\n"
-# define QUOTE_MARKS			"\'\""
+# define QUOTE_MARKS		"\'\""
+
+# define ERR_UNO_BRACKET	"unopened brackets"
+# define ERR_UNC_BRACKET	"unclosed brackets"
+# define ERR_EMPTY_BRACKET	"empty brackets"
+# define ERR_REDIR			"invalid redirection"
+# define ERR_QUOTE			"unclosed quotation mark"
+# define ERR_LIST			"incomplete command list"
+# define ERR_MISS_OP		"missing operator"
+# define ERR_PIPE			"incomplete pipe" 
 
 # define D_KEY_ESCAPE 27
 # define D_KEY_SPACE 32
@@ -64,16 +76,16 @@
 
 # define TOK_TEXT			1
 # define TOK_S_QUOTE		2
-# define TOK_D_QUOTE		3
-# define TOK_REDIR_FILE		4
-# define TOK_CONNECTED		5
-# define TOK_BL				6
-# define TOK_PIPE			7
-# define TOK_B_BRACKET		8
-# define TOK_E_BRACKET		9
-# define TOK_REDIR			10
-# define TOK_HEREDOC		11
-# define TOK_WILDCARD		12
+# define TOK_D_QUOTE		4
+# define TOK_REDIR_FILE		8
+# define TOK_CONNECTED		16
+# define TOK_BL				32
+# define TOK_PIPE			64
+# define TOK_B_BRACKET		128
+# define TOK_E_BRACKET		254
+# define TOK_REDIR			512
+# define TOK_HEREDOC		1024
+# define TOK_WILDCARD		2048
 
 typedef struct s_token_content
 {
@@ -126,6 +138,10 @@ int		lexer_token_redir(char *str, int *i, t_list **l_token);
 
 /*________lexer_token_add.c__________*/
 int		lexer_token_text(char *str, int *i, t_list **l_token);
+int		lexer_token_quote(char *str, int *i, t_list **l_token);
+
+/*________lexer_syntax.c__________*/
+int		lexer_syntax_check(t_list *token);
 
 /* ************************************************************************** */
 /* 									PARSER									  */
@@ -145,12 +161,17 @@ int		lexer_token_text(char *str, int *i, t_list **l_token);
 
 /*________token.c__________*/
 t_list	*token_create(char *str, int type);
+t_token	*token_content(t_list *token);
+void	c_token_destroy(void *token);
+bool	token_is_cmd(t_list *token);
 
 /* ************************************************************************** */
 /* 									EXECUTOR								  */
 /* ************************************************************************** */
 
-/*________token.c__________*/
+/*________exec_exit_status.c__________*/
+int		exec_exit_status_get(void);
+void	exec_exit_status_set(int status);
 
 
 #endif

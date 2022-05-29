@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:36:50 by schung            #+#    #+#             */
-/*   Updated: 2022/05/08 21:18:58 by schung           ###   ########.fr       */
+/*   Updated: 2022/05/29 15:21:08 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,3 +110,4 @@ int	lexer_token_redir(char *str, int *i, t_list **l_token)
 	}
 	return (0);
 }
+

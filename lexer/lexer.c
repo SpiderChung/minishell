@@ -6,26 +6,13 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 17:25:42 by schung            #+#    #+#             */
-/*   Updated: 2022/05/08 21:25:28 by schung           ###   ########.fr       */
+/*   Updated: 2022/05/14 16:04:54 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
 
-t_list	*lexer(char *input)
-{
-	t_list	*l_token;
-
-	l_token = token_list_get(input);
-	if (l_token == NULL)
-		return (NULL);
-	if (lexer_syntax_check(l_token) == ERROR)
-	{
-
-	}
-}
-
-static t_list	token_list_get(char *input)
+static t_list	*token_list_get(char *input)
 {
 	t_list	*l_token;
 	int		i;
@@ -49,4 +36,31 @@ static t_list	token_list_get(char *input)
 		while (input[i] && ft_strchr(WHITESPACES, input[i]))
 			i++;
 	}
+	if (input[i] != '\0')
+		ft_lstclear(&l_token, c_token_destroy);
+	return (l_token);
+}
+
+t_list	*lexer(char *input)
+{
+	t_list	*l_token;
+
+	l_token = token_list_get(input);
+	if (l_token == NULL)
+		return (NULL);
+	if (lexer_syntax_check(l_token) == ERROR)
+	{
+		exec_exit_status_set(ERR_SYNTAX_EXIT);
+		ft_lstclear(&l_token, c_token_destroy);
+		return (NULL);
+	}
+	if (redir_mark_files(l_token) == ERROR)
+	{
+		exec_exit_status_set(ERR_SYNTAX_EXIT);
+		ft_lstclear(&l_token, c_token_destroy);
+		return (NULL);
+	}
+	if (env_var_is_value(DEBUG_ENV, "printer"))
+		printer_token(l_token);
+	return (l_token);
 }
