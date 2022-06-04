@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 19:37:41 by schung            #+#    #+#             */
-/*   Updated: 2022/05/08 16:50:18 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/04 16:14:12 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,19 @@ static char	*get_input(void)
 
 static void	process_input(char *input)
 {
-	ft_putstr_fd(input, STDOUT_FILENO);
+	t_list	*l_token;
+	t_list	*l_parser;
+
+	signal(SIGINT, SIG_IGN);
+	errno = 0;
+	l_token = NULL;
+	l_parser = NULL;
+	l_token = lexer(input);
+	free(input);
+	if (l_token != NULL)
+		l_parser = parser(l_token);
+	
+	
 }
 
 int	main(void)

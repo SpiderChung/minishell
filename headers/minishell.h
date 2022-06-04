@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 18:44:38 by schung            #+#    #+#             */
-/*   Updated: 2022/05/29 15:48:42 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/04 15:50:05 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,5 +173,11 @@ bool	token_is_cmd(t_list *token);
 int		exec_exit_status_get(void);
 void	exec_exit_status_set(int status);
 
+/* ************************************************************************** */
+/* 									PRINTER 								  */
+/* ************************************************************************** */
+
+/*________printer_token.c__________*/
+void	printer_token(t_list *l_token);
 
 #endif
