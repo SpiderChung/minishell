@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 18:17:19 by schung            #+#    #+#             */
-/*   Updated: 2022/05/14 14:40:18 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/14 18:57:10 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,24 @@ bool	token_is_cmd(t_list *token)
 	if (token_content(token)->flag & (TOK_TEXT | TOK_REDIR))
 		return (TRUE);
 	return (FALSE);
+}
+
+char	*token_to_str(t_list *token)
+{
+	char	*str;
+	char	*tmp;
+
+	if (token == NULL || token_content(token)->str == NULL)
+		return (NULL);
+	str = ft_strdup(token_content(token)->str);
+	while (token && (token_content(token)->flag & TOK_CONNECTED))
+	{
+		tmp = str;
+		str = ft_strjoin(str, token_content(token->next)->str);
+		free(tmp);
+		if (str == NULL)
+			return (NULL);
+		token = token->next;
+	}
+	return (str);
 }

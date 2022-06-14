@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 19:50:53 by schung            #+#    #+#             */
-/*   Updated: 2022/05/07 21:45:11 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/14 19:10:57 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,5 +60,12 @@ int	print_error(char *s1, char *s2, char *s3, char *message)
 		ft_putstr_fd(message, 2);
 	}
 	ft_putchar_fd('\n', 2);
+	return (ERROR);
+}
+
+int	print_error_errno(char *s1, char *s2, char *s3)
+{
+	print_error(s1, s2, s3, strerror(errno));
+	errno = 0;
 	return (ERROR);
 }

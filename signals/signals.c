@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 19:17:38 by schung            #+#    #+#             */
-/*   Updated: 2022/05/08 16:50:03 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/14 19:21:28 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,17 @@ void	signal_tckl(int sig)
 	if (sig == SIGINT)
 	{
 		write(STDERR_FILENO, "\n", 1);
+		rl_replace_line("", 0);
+		rl_on_new_line();
+		rl_redisplay();
+	}
+}
+
+void	signal_ctlc_heredoc(int sig)
+{
+	if (sig == SIGINT)
+	{
+		write(STDERR_FILENO, '\n', 1);
 		rl_replace_line("", 0);
 		rl_on_new_line();
 		rl_redisplay();
