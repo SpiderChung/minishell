@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/08 21:28:43 by schung            #+#    #+#             */
-/*   Updated: 2022/06/14 19:04:36 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/15 21:22:02 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static int	other_len(char *chr)
 	return (0);
 }
 
-static int quote_len(char *str)
+static int	quote_len(char *str)
 {
 	char	mark;
 	int		i;

@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/07 20:27:56 by schung            #+#    #+#             */
-/*   Updated: 2022/05/07 23:08:02 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/16 18:50:03 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,20 @@ char	*env_find_var(char *name)
 		i++;
 	}
 	return (NULL);
+}
+
+bool	env_var_is_value(char *var_name, char *value)
+{
+	char	*env_value;
+
+	env_value = env_get_value(var_name);
+	if (env_value)
+		if (ft_strncmp(env_value, value, ft_strlen(value) + 1) == 0)
+			return (TRUE);
+	return (FALSE);
+}
+
+bool	env_is_var_char(char c)
+{
+	return (ft_isalnum(c) || c == '_');
 }

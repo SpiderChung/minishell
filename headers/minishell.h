@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 18:44:38 by schung            #+#    #+#             */
-/*   Updated: 2022/06/14 20:19:41 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/16 18:50:37 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,8 @@ extern char		**g_env;
 char		*env_get_value(char *name);
 char		*env_find_var(char *name);
 int			env_init(void);
+bool		env_is_var_char(char c);
+bool		env_var_is_value(char *var_name, char *value);
 
 /* ************************************************************************** */
 /* 									SIGNALS									  */
@@ -151,7 +153,13 @@ char		*str_append_char(char *str, char append);
 char		str_last_char(char *str);
 char		*str_append_str(char *str, char *append);
 
+/*________utils_gnl.c__________*/
+char		*minishell_get_next_line(int fd);
 
+/*________utils_list.c__________*/
+t_list		*lst_node_prev(t_list *lst, t_list *node);
+int			lst_node_remove(t_list **list, t_list *node, void (*del)(void *));
+int			lst_relink(t_list **lst, t_list *node, t_list *start, t_list *end);
 /* ************************************************************************** */
 /* 									LEXER									  */
 /* ************************************************************************** */
