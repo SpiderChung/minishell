@@ -6,12 +6,11 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 20:43:25 by schung            #+#    #+#             */
-/*   Updated: 2022/06/15 21:20:33 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/24 20:40:36 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
-
 
 static int	*scmd_token_set(t_c_scmd *c_scmd, t_list **l_token)
 {
@@ -38,7 +37,6 @@ static int	*scmd_token_set(t_c_scmd *c_scmd, t_list **l_token)
 	}
 	return (0);
 }
-
 
 t_list	*parser_scmd_tokens(t_list *l_token)
 {

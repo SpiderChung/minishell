@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/06 19:37:40 by schung            #+#    #+#             */
-/*   Updated: 2022/06/08 19:30:24 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/24 20:40:06 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ void	c_cmd_destroy(void *c_cmd)
 			ft_lstclear(&(((t_c_cmd *)c_cmd)->l_element), c_cmd_destroy);
 		free(c_cmd);
 	}
+}
+
+t_c_cmd	*cmd_content(t_list *cmd)
+{
+	return ((t_c_cmd *)cmd->content);
 }
 
 int	cmd_type(t_list *cmd)

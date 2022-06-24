@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 18:44:38 by schung            #+#    #+#             */
-/*   Updated: 2022/06/16 18:50:37 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/24 21:37:04 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ char		*minishell_get_next_line(int fd);
 t_list		*lst_node_prev(t_list *lst, t_list *node);
 int			lst_node_remove(t_list **list, t_list *node, void (*del)(void *));
 int			lst_relink(t_list **lst, t_list *node, t_list *start, t_list *end);
+
 /* ************************************************************************** */
 /* 									LEXER									  */
 /* ************************************************************************** */
@@ -185,15 +186,26 @@ int			lexer_syntax_check(t_list *token);
 /* ************************************************************************** */
 
 /*________parser.c__________*/
+t_list		*parser(t_list *l_token);
 
 /*________parser_heredoc.c__________*/
 int			parser_heredoc(t_list	*l_token);
+
+/*________parser_group.c__________*/
+int			parser_cmd_group_merge(t_list **l_cmd);
+
+/*________parser_pipeline.c__________*/
+int			parser_cmd_pipeline_merge(t_list **l_cmd);
 
 /* ************************************************************************** */
 /* 									EXPANDER								  */
 /* ************************************************************************** */
 
 /*________expander.c__________*/
+int			expand_var(t_c_scmd *c_scmd);
+
+/*________expand_var.c__________*/
+int			expand_var_token_list(t_list *l_token);
 
 /* ************************************************************************** */
 /* 									TOKEN									  */
@@ -214,12 +226,35 @@ char		*token_to_str(t_list *token);
 int			exec_exit_status_get(void);
 void		exec_exit_status_set(int status);
 
+/*________exec_group.c__________*/
+int			exec_recursive(t_list *l_cmd, bool subshell, t_list *l_free);
+
+/*________exec_scmd.c__________*/
+int			exec_scmd_preparation(t_list *scmd, char ***argv);
+
+/*________exec_scmd_path.c__________*/
+
+/*________exec_pipeline.c__________*/
+
+/*________exec_wait.c__________*/
+
+/*________exec.c__________*/
+
 /* ************************************************************************** */
 /* 									PRINTER 								  */
 /* ************************************************************************** */
 
 /*________printer_token.c__________*/
 void		printer_token(t_list *l_token);
+
+/*________printer_cmd.c__________*/
+void		printer_cmd(t_list *l_cmd);
+void		printer_structure(t_list *l_cmd);
+
+/*________printer_scmd.c__________*/
+void		printer_scmd(t_c_scmd *scmd);
+void		printer_other(int type);
+void		printer_scmd_pipeline(t_list *l_scmd_pipeline, bool line);
 
 /* ************************************************************************** */
 /* 									CMD      								  */
@@ -230,6 +265,7 @@ int			cmd_type_from_token(t_list *token);
 int			cmd_type(t_list *cmd);
 void		c_cmd_destroy(void *c_cmd);
 t_list		*cmd_create(int type);
+t_c_cmd		*cmd_content(t_list *cmd);
 
 /*________scmd.c__________*/
 t_list		*scmd_create(int type);

@@ -6,13 +6,11 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/08 20:01:05 by schung            #+#    #+#             */
-/*   Updated: 2022/06/14 18:59:41 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/24 20:39:46 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../headers/minishell.h"
-
-
 
 int	redir_type(char *redir)
 {
@@ -34,4 +32,3 @@ int	redir_type(char *redir)
 	else
 		return (ERROR);
 }
-
