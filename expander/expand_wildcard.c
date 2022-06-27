@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 21:53:35 by schung            #+#    #+#             */
-/*   Updated: 2022/06/27 00:18:00 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/27 21:15:22 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,14 @@ static int  expand_wildcard_token(t_list *token, t_list **l_wildcard,
     iter = *l_wildcard;
     while (iter)
     {
-        token_content(iter)->flag = token_content(token)->flagl
-        token_content(iter)->fl
+        token_content(iter)->flag = token_content(token)->flag;
+        token_content(iter)->flag &= ~(TOK_CONNECTED);
+		token_content(iter)->flag &= ~(TOK_S_QUOTE | TOK_D_QUOTE);
+		iter = iter->next;
     }
-
+	free(pattern);
+	ft_free_split(&split);
+	return (0);
 }
 
 int expand_wildcard_list(t_list **l_token, char **files)
@@ -110,7 +114,12 @@ int expand_wildcard_list(t_list **l_token, char **files)
         temp = temp->next;
         if  (expand_token_is_wildcard(iter))
         {
-            if (expand)
+            if (expand_wildcard_token(iter, &l_wildcard, files) == ERROR)
+				return (ERROR);
+			if (l_wildcard != NULL)
+				expand_wildcard_replace_connected(l_token, iter, l_wildcard);
         }
+		iter = temp;
     }
+	return (0);
 }

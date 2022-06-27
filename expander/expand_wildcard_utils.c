@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 21:13:23 by schung            #+#    #+#             */
-/*   Updated: 2022/06/26 22:30:24 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/27 21:15:20 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,27 @@ char    **expand_files_current_dir(void)
     }
     closedir(dir);
     return (file_names);
+}
+
+void	expand_wildcard_replace_connected(t_list **l_token,
+			t_list	*old, t_list *new)
+{
+	t_list	*prev;
+	t_list	*iter;
+	t_list	*temp;
+
+	iter = old;
+	prev = lst_node_prev(*l_token, old);
+	while (iter && token_content(iter)->flag & TOK_CONNECTED)
+	{
+		temp = iter->next;
+		lst_node_remove(l_token, iter, c_token_destroy);
+		iter = temp;
+	}
+	ft_lstlast(new)->next = iter->next;
+	lst_node_remove(l_token, iter, c_token_destroy);
+	if (prev == old)
+		*l_token = new;
+	else
+		prev->next = new;
 }

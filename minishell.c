@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 19:37:41 by schung            #+#    #+#             */
-/*   Updated: 2022/06/04 16:14:12 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/27 22:17:22 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ static void	process_input(char *input)
 	free(input);
 	if (l_token != NULL)
 		l_parser = parser(l_token);
+	if (l_token != NULL && l_parser != NULL)
+		exec_re
 	
 	
 }

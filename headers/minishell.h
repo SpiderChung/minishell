@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 18:44:38 by schung            #+#    #+#             */
-/*   Updated: 2022/06/26 22:36:04 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/27 22:22:54 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # define DEBUG_ENV			"DEBUG"
 # define ERROR				-1
 # define WILDCARD			-1
+# define VAR_SPACE			-1
 
 # define FALSE 				0
 # define TRUE 				1
@@ -118,6 +119,12 @@ typedef struct s_cmd_content
 	t_list	*l_element;
 }	t_c_cmd;
 
+typedef struct s_redir_undo_content
+{
+	int		fd_repl;
+	int		fd_repl_dup;
+}	t_c_redir_undo;
+
 extern char		**g_env;
 
 /* ************************************************************************** */
@@ -165,6 +172,7 @@ int			lst_relink(t_list **lst, t_list *node, t_list *start, t_list *end);
 
 /*________utils_split.c__________*/
 int 		split_append_str(char ***split, char *new_str);
+void		ft_free_split(char ***split);
 
 /* ************************************************************************** */
 /* 									LEXER									  */
@@ -219,6 +227,11 @@ int 		expand_wildcard_list(t_list **l_token, char **files);
 /*________expand_wildcard_utils.c__________*/
 char   		**expand_files_current_dir(void);
 bool   		expand_token_is_wildcard(t_list *token);
+void		expand_wildcard_replace_connected(t_list **l_token,
+			t_list	*old, t_list *new);
+
+/*________expand_var_split.c__________*/
+int			expand_var_splitting(t_list **l_token);
 
 /* ************************************************************************** */
 /* 									TOKEN									  */
@@ -230,6 +243,9 @@ t_token		*token_content(t_list *token);
 void		c_token_destroy(void *token);
 bool		token_is_cmd(t_list *token);
 char		*token_to_str(t_list *token);
+
+/*________token_list.c__________*/
+char		**l_token_to_split(t_list *l_token);
 
 /* ************************************************************************** */
 /* 									EXECUTOR								  */
@@ -244,6 +260,7 @@ int			exec_recursive(t_list *l_cmd, bool subshell, t_list *l_free);
 
 /*________exec_scmd.c__________*/
 int			exec_scmd_preparation(t_list *scmd, char ***argv);
+int			exec_scmd(t_list *scmd, bool subshell, t_list *l_free);
 
 /*________exec_scmd_path.c__________*/
 
@@ -284,5 +301,15 @@ t_c_cmd		*cmd_content(t_list *cmd);
 t_list		*scmd_create(int type);
 t_c_scmd	*scmd_content(t_list *scmd);
 void		c_scmd_destroy(void *c_scmd);
+
+/* ************************************************************************** */
+/* 									REDIR      								  */
+/* ************************************************************************** */
+
+/*________redir_undo.c__________*/
+int			edir_undo(t_list **l_undo);
+
+/*________redir.c__________*/
+int			redir_type(char *redir);
 
 #endif

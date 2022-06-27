@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/26 21:21:00 by schung            #+#    #+#             */
-/*   Updated: 2022/06/26 21:36:08 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/27 21:15:25 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,4 +31,19 @@ int split_append_str(char ***split, char *new_str)
     free(*split);
     *split = new_split;
     return (0);
+}
+
+void	ft_free_split(char ***split)
+{
+	int	i;
+
+	i = 0;
+	while ((*split)[i] != NULL)
+	{
+		free((*split)[i]);
+		(*split)[i] = NULL;
+		i++;
+	}
+	free(*split);
+	*split = NULL;
 }
