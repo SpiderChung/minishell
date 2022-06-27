@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 18:44:38 by schung            #+#    #+#             */
-/*   Updated: 2022/06/24 21:37:04 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/26 22:36:04 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # include <stdbool.h>
 # include <errno.h>
 # include <limits.h>
+# include <dirent.h>
 
 # define LMAGENTA 			"\033[1;35m"
 # define DEFAULT 			"\033[0m"
@@ -38,6 +39,7 @@
 # define SHELL_NAME			"minishell"
 # define DEBUG_ENV			"DEBUG"
 # define ERROR				-1
+# define WILDCARD			-1
 
 # define FALSE 				0
 # define TRUE 				1
@@ -161,6 +163,9 @@ t_list		*lst_node_prev(t_list *lst, t_list *node);
 int			lst_node_remove(t_list **list, t_list *node, void (*del)(void *));
 int			lst_relink(t_list **lst, t_list *node, t_list *start, t_list *end);
 
+/*________utils_split.c__________*/
+int 		split_append_str(char ***split, char *new_str);
+
 /* ************************************************************************** */
 /* 									LEXER									  */
 /* ************************************************************************** */
@@ -203,9 +208,17 @@ int			parser_cmd_pipeline_merge(t_list **l_cmd);
 
 /*________expander.c__________*/
 int			expand_var(t_c_scmd *c_scmd);
+int			expand_wildcard(t_c_scmd *c_scmd);
 
 /*________expand_var.c__________*/
 int			expand_var_token_list(t_list *l_token);
+
+/*________expand_wildcard.c__________*/
+int 		expand_wildcard_list(t_list **l_token, char **files);
+
+/*________expand_wildcard_utils.c__________*/
+char   		**expand_files_current_dir(void);
+bool   		expand_token_is_wildcard(t_list *token);
 
 /* ************************************************************************** */
 /* 									TOKEN									  */
