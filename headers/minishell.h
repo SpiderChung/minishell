@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 18:44:38 by schung            #+#    #+#             */
-/*   Updated: 2022/06/27 22:22:54 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/29 19:28:17 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@
 # include <errno.h>
 # include <limits.h>
 # include <dirent.h>
+# include <sys/stat.h>
+
 
 # define LMAGENTA 			"\033[1;35m"
 # define DEFAULT 			"\033[0m"
@@ -100,6 +102,11 @@
 # define REDIR_FILE			0
 # define REDIR_NUM			1
 
+// EXIT STATUS
+# define EXEC_NOEXEC		126
+# define EXEC_NOTFOUND		127
+
+
 typedef struct s_token_content
 {
 	int		flag;
@@ -124,6 +131,13 @@ typedef struct s_redir_undo_content
 	int		fd_repl;
 	int		fd_repl_dup;
 }	t_c_redir_undo;
+
+
+struct s_builtins
+{
+	char	*name;
+	int		(*func)(int argc, char **argv);
+};
 
 extern char		**g_env;
 
@@ -256,19 +270,34 @@ int			exec_exit_status_get(void);
 void		exec_exit_status_set(int status);
 
 /*________exec_group.c__________*/
-int			exec_recursive(t_list *l_cmd, bool subshell, t_list *l_free);
+int			exec_group(t_list *l_cmd, t_list *l_free);
+
 
 /*________exec_scmd.c__________*/
 int			exec_scmd_preparation(t_list *scmd, char ***argv);
 int			exec_scmd(t_list *scmd, bool subshell, t_list *l_free);
+void		exec_scmd_free_exit(int status, char **argv, t_list *l_free);
+int			exec_scmd_exec(char **argv);
 
 /*________exec_scmd_path.c__________*/
+int			exec_scmd_search_path(char **argv);
 
 /*________exec_pipeline.c__________*/
+int			exec_pipeline(t_list *pipeline, t_list *l_free);
+
+/*________exec_pipeline_pipes.c__________*/
+void		exec_pipeline_pipes_int(int pipes[2][2]);
+void		exec_pipeline_pipes_set(int fd[2], int pipes[2][2], int i,
+				bool last);
+void		exec_pipeline_pipes_close(int pipes[2][2], int i, bool last);
 
 /*________exec_wait.c__________*/
+int			exec_wait_pid(int last_pid, char *name);
+int			exec_wait_for_all(int last_pid);
 
-/*________exec.c__________*/
+/*________executor.c__________*/
+void		exec_free_all(char **argv, t_list *l_free);
+int			exec_recursive(t_list *l_cmd, bool subshell, t_list *l_free);
 
 /* ************************************************************************** */
 /* 									PRINTER 								  */
@@ -311,5 +340,18 @@ int			edir_undo(t_list **l_undo);
 
 /*________redir.c__________*/
 int			redir_type(char *redir);
+
+/* ************************************************************************** */
+/* 									BUILTIN    								  */
+/* ************************************************************************** */
+
+/*________built.c__________*/
+int			builtin_check(char **argv);
+int			builtin_exec(char **argv, bool subshell, t_list *l_free);
+
+/*________built_exit.c__________*/
+int			builtin_exit(int argc, char **argv, bool subshell, t_list *l_free);
+
+
 
 #endif

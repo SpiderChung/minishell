@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/03 19:37:41 by schung            #+#    #+#             */
-/*   Updated: 2022/06/27 22:17:22 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/29 19:31:17 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,9 +47,11 @@ static void	process_input(char *input)
 	if (l_token != NULL)
 		l_parser = parser(l_token);
 	if (l_token != NULL && l_parser != NULL)
-		exec_re
-	
-	
+		exec_recursive(l_parser, FALSE, l_parser);
+	if (l_parser != NULL)
+		ft_lstclear(&l_parser, c_cmd_destroy);
+	else if (l_token != NULL)
+		ft_lstclear(&l_token, c_cmd_destroy);
 }
 
 int	main(void)
