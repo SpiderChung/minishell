@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 18:44:38 by schung            #+#    #+#             */
-/*   Updated: 2022/06/29 19:28:17 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/30 20:32:38 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@
 # include <limits.h>
 # include <dirent.h>
 # include <sys/stat.h>
-
 
 # define LMAGENTA 			"\033[1;35m"
 # define DEFAULT 			"\033[0m"
@@ -106,7 +105,6 @@
 # define EXEC_NOEXEC		126
 # define EXEC_NOTFOUND		127
 
-
 typedef struct s_token_content
 {
 	int		flag;
@@ -131,7 +129,6 @@ typedef struct s_redir_undo_content
 	int		fd_repl;
 	int		fd_repl_dup;
 }	t_c_redir_undo;
-
 
 struct s_builtins
 {
@@ -185,7 +182,7 @@ int			lst_node_remove(t_list **list, t_list *node, void (*del)(void *));
 int			lst_relink(t_list **lst, t_list *node, t_list *start, t_list *end);
 
 /*________utils_split.c__________*/
-int 		split_append_str(char ***split, char *new_str);
+int			split_append_str(char ***split, char *new_str);
 void		ft_free_split(char ***split);
 
 /* ************************************************************************** */
@@ -236,13 +233,13 @@ int			expand_wildcard(t_c_scmd *c_scmd);
 int			expand_var_token_list(t_list *l_token);
 
 /*________expand_wildcard.c__________*/
-int 		expand_wildcard_list(t_list **l_token, char **files);
+int			expand_wildcard_list(t_list **l_token, char **files);
 
 /*________expand_wildcard_utils.c__________*/
-char   		**expand_files_current_dir(void);
-bool   		expand_token_is_wildcard(t_list *token);
+char		**expand_files_current_dir(void);
+bool		expand_token_is_wildcard(t_list *token);
 void		expand_wildcard_replace_connected(t_list **l_token,
-			t_list	*old, t_list *new);
+				t_list	*old, t_list *new);
 
 /*________expand_var_split.c__________*/
 int			expand_var_splitting(t_list **l_token);
@@ -271,7 +268,6 @@ void		exec_exit_status_set(int status);
 
 /*________exec_group.c__________*/
 int			exec_group(t_list *l_cmd, t_list *l_free);
-
 
 /*________exec_scmd.c__________*/
 int			exec_scmd_preparation(t_list *scmd, char ***argv);
@@ -345,13 +341,29 @@ int			redir_type(char *redir);
 /* 									BUILTIN    								  */
 /* ************************************************************************** */
 
-/*________built.c__________*/
+/*________builtin.c__________*/
 int			builtin_check(char **argv);
 int			builtin_exec(char **argv, bool subshell, t_list *l_free);
 
-/*________built_exit.c__________*/
+/*________builtin_exit.c__________*/
 int			builtin_exit(int argc, char **argv, bool subshell, t_list *l_free);
 
+/*________builtin_echo.c__________*/
+int			builtin_echo(int argc __attribute((unused)), char **argv);
 
+/*________builtin_env.c__________*/
+int			builtin_env(int argc __attribute((unused)),
+				char **argv __attribute((unused)));
+
+/*________builtin_export.c__________*/
+
+/*________builtin_cd.c__________*/
+
+/*________builtin_pwd.c__________*/
+int			builtin_pwd(int argc __attribute((unused)),
+				char **argv __attribute((unused)));
+
+/*________builtin_unset.c__________*/
+int			builtin_unset(int argc __attribute((unused)), char **argv);
 
 #endif

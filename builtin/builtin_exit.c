@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 20:13:23 by schung            #+#    #+#             */
-/*   Updated: 2022/06/29 18:35:37 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/30 20:31:36 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 static bool	num_is_numeric(char *str)
 {
-	int i;
+	int	i;
+
 	i = 0;
 	if (str[0] == '\0')
 	{

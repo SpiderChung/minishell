@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/29 19:17:44 by schung            #+#    #+#             */
-/*   Updated: 2022/06/29 19:20:45 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/30 20:27:30 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,4 +28,3 @@ int	exec_group(t_list *l_cmd, t_list *l_free)
 	}
 	return (exec_wait_pid(pid, NULL));
 }
-

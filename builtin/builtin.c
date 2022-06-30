@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 19:31:33 by schung            #+#    #+#             */
-/*   Updated: 2022/06/29 19:31:44 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/30 20:33:04 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	builtin_check(char **argv)
 	int	i;
 
 	i = 0;
-	if (argv[0] && !ft_strncmp(arvg[0], "exit", 5))
+	if (argv[0] && !ft_strncmp(argv[0], "exit", 5))
 		return (INT_MAX);
 	while (g_builtins[i].name != NULL && argv)
 	{

@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 21:22:44 by schung            #+#    #+#             */
-/*   Updated: 2022/06/29 19:05:06 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/30 20:27:05 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ static int	exec_builtin(t_list *scmd, char **argv,
 	int		status;
 
 	if (builtin_check(argv))
-	{ 
+	{
 		status = redir(scmd_content(scmd)->l_redir, &l_redir_undo);
 		if (status != ERROR)
 			status = builtin_exec(argv, subshell, l_free);
@@ -99,7 +99,7 @@ int	exec_scmd(t_list *scmd, bool subshell, t_list *l_free)
 	if (!(scmd_content(scmd)->l_argv))
 		return (0);
 	if (builtin_check(argv))
-		return(exec_builtin(scmd, argv, subshell, l_free));
+		return (exec_builtin(scmd, argv, subshell, l_free));
 	pid = fork();
 	if (pid == -1)
 		ft_free_split(&argv);

@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 22:00:39 by schung            #+#    #+#             */
-/*   Updated: 2022/06/29 18:35:52 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/30 20:26:29 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ static int	path_split_append_slash(char **path_split)
 	}
 	return (0);
 }
+
 static char	**path_split_get(void)
 {
 	char	**path_split;
@@ -100,7 +101,7 @@ int	exec_scmd_search_path(char **argv)
 			return (0);
 		}
 	}
-		if (path_split)
-			ft_free_split(&path_split);
-		return (ERROR);
+	if (path_split)
+		ft_free_split(&path_split);
+	return (ERROR);
 }

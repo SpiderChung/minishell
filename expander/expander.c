@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/24 21:27:37 by schung            #+#    #+#             */
-/*   Updated: 2022/06/27 22:17:27 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/30 20:03:05 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	expand_var(t_c_scmd *c_scmd)
 {
-	int status;
+	int	status;
 
 	status = expand_var_token_list(c_scmd->l_argv);
 	if (status != ERROR)

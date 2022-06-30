@@ -6,7 +6,7 @@
 /*   By: schung <schung@student.21-school.ru>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/28 21:02:13 by schung            #+#    #+#             */
-/*   Updated: 2022/06/29 19:15:46 by schung           ###   ########.fr       */
+/*   Updated: 2022/06/30 20:31:01 by schung           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,13 @@ static int	pipeline_element(t_list *element, int pipes[2][2], int i,
 	dup2(fd[1], STDOUT_FILENO);
 	exec_pipeline_pipes_close(pipes, -1, FALSE);
 	if (cmd_type(element) == CMD_SCMD)
-		pipeline_scmd
-
+		pipeline_scmd(element, l_free);
+	else if (cmd_type(element) == CMD_GROUP)
+	{
+		status = exec_recursive(cmd_content(element)->l_element, TRUE, l_free);
+		exec_free_all(NULL, l_free);
+		exit (status);
+	}
 }
 
 static int	pipeline_pipe_fork(t_list *iter, int pipes[2][2], int i,
@@ -62,7 +67,8 @@ static int	pipeline_pipe_fork(t_list *iter, int pipes[2][2], int i,
 		return (-1);
 	}
 	if (pid == 0)
-		pipeline_element
+		pipeline_element(iter, pipes, i, l_free);
+	return (pid);
 }
 
 int	exec_pipeline(t_list *pipeline, t_list *l_free)
